@@ -3,7 +3,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
-
+const authRoutes = require("./routes/auth.routes");
 const app = express();
 
 // Middleware
@@ -28,5 +28,7 @@ app.get("/", (req, res) => {
     version: "1.0.0",
   });
 });
+// API Routes
+app.use("/api/v1/auth", authRoutes);
 
 module.exports = app;
