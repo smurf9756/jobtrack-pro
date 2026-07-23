@@ -1,6 +1,6 @@
 const authService = require("../services/auth.service");
 
-const register = async (req, res) => {
+exports.register = async (req, res) => {
   try {
     const user = await authService.registerUser(req.body);
 
@@ -19,8 +19,4 @@ const register = async (req, res) => {
       message: error.message,
     });
   }
-};
-
-module.exports = {
-  register,
 };

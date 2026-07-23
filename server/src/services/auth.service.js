@@ -1,20 +1,20 @@
-const prisma = require("../config/prisma");
 const bcrypt = require("bcryptjs");
+const prisma = require("../config/prisma");
 
-const registerUser = async ({ fullName, email, password }) => {
-  // Check if the email already exists
+exports.registerUser = async ({ fullName, email, password }) => {
+  // Check if user exists
   const existingUser = await prisma.user.findUnique({
     where: { email },
   });
 
   if (existingUser) {
-    throw new Error("Email already exists");
+    throw new Error("Email already registered");
   }
 
-  // Hash the password
+  // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  // Create the user
+  // Create user
   const user = await prisma.user.create({
     data: {
       fullName,
@@ -24,8 +24,4 @@ const registerUser = async ({ fullName, email, password }) => {
   });
 
   return user;
-};
-
-module.exports = {
-  registerUser,
 };
